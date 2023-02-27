@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pipeline-demo
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myweb
+  name: myweb
+  namespace: pipeline-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myweb
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      containers:
+      - image: harbor.fon.bg.ac.rs/vujin/myweb:93
+        imagePullPolicy: Always
+        name: myweb
+      imagePullSecrets:
+      - name: harborcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: myweb
+  name: myweb
+  namespace: pipeline-demo
+spec:
+  ports:
+  - port: 32223
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: myweb
+  type: LoadBalancer
