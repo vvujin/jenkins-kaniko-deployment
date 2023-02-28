@@ -23,7 +23,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: harbor.fon.bg.ac.rs/vujin/myweb:97
+      - image: harbor.fon.bg.ac.rs/vujin/myweb:98
         imagePullPolicy: Always
         name: myweb
       imagePullSecrets:
